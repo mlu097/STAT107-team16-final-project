@@ -105,7 +105,7 @@ This project has the goal of exploring the relationship between party dynamics, 
 The purpose of this project is to examine how gender, race, and ideology correlate with political success in U.S. primary elections and how they differ among factors like parties. Primary elections are important to utilize when determining who should represent a certain party in the election. We will be focusing on two questions. Our first question is: “How do gender and race correlate with primary success rates, and do these patterns differ by party or office (Senate, House, Governor)?” Next, we’re going to ask: “How does the ideological overlap between Democrats and Republicans in Congress change around periods of large shifts in primary dynamics like ‘wave years’?” To answer these questions, we will utilize logistic regression, which is utilized to predict an outcome’s likelihood for events such as winning a primary. To see which traits are significant for each party’s candidates, we can compare separate models made for Republicans and Democrats. 
 
 # Data:
-We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. We also combined the datasets into one dataframe “R.Cands” to be better. 
+We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. We also combined the datasets into one dataframe “all_cands” to be better at pulling data. 
 
 
 
@@ -157,6 +157,10 @@ ggplot(candidates, aes(x = factor(primary_win, labels = c("Lost", "Won")),
        x = "Primary Outcome", y = "Ideology Score") +
   theme_minimal()
 ```
+The histograms relate to primary dynamics, which is how competitive and dynamic the primaries are. The histograms tell us that the primaries were actyally not as competitive, as there's typically one strong, unchallenged candidate. The wave elections would show a lot more spread in the middle range -- this is the candidates splitting the votes and it seems very spread out. The difference between the 2018 and 2022 primaries show us how polarized they were individually. 
+The x-axis represents the candidate's share of votes in their primary ranged from0 to 100% and the y-axis represents how many candidates got that share. There are visibly two spikes -- one spike is near 0% which means many Democrats got extremely low support and lost badly and another spike is near 100%, which means there were candidates who were strong and won overwhelmingly. So, we can conclude that most democratic primaries had either very strong, practically unopposed candidates or hopeless ones with small to no votes. Very few of the races were neck and neck. 
+
+For the line plot, the x-axis represents the election year and the y-axis represents the average share of votes that each cadidate got in their party's primaries. Looking at the trend of the graph, there is a very strong rise from 31% to 36%; this suggests candidates received a larger portion of votes in 2022 than 2018 representing more dominant winners (incumbents) than close races. This was also supported by the histograms. We can conclude from this that primaries grew to be less competitive in 2022 than they were in 2018. 
 
 # Analysis:
 We chose to use logistic regression to take a deeper look at how different factors can be used to predict success in a primary election. It’s especially helpful because it works with binary outcomes (win/lose) and it lets us know how much the odds of winning or losing gets affected by a particular variable. To do so, we built one model that includes all candidates:
@@ -175,8 +179,8 @@ We’ll include testing to see whether certain effects end up changing due to th
 
 ## Author Contribution:
 
-Ananya: wrote the report and worked on visualizations
+Ananya: wrote the report, worked on visualizations
 
-Melody: worked on the logistic regression and visualizations
+Melody: worked on the logistic regression, formatting 
 
-Chiko: worked on cleaning data and regression
+Chiko: worked on cleaning data, regression, visualizations
