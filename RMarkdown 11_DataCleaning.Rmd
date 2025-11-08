@@ -1,0 +1,81 @@
+---
+title: "an RMarkdown 11_DataCleaning.Rmd"
+output: html_document
+date: "2025-11-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+First I must load the datasets into my R markdwon file 
+``` {r}
+rep_2018 <- read_csv("00_rep_candidates_2018.csv")
+rep_2022 <- read_csv("00_rep_candidates_2022.csv")
+dem_2018 <- read_csv("00_dem_candidates_2018.csv")
+dem_2022 <- read_csv("00_dem_candidates_2022.csv")
+```
+Next it's time to start cleaning names 
+```{r}
+rep_2018 <- rep_2018 %>%
+  janitor::clean_names()
+
+rep_2022 <- rep_2022 %>%
+  janitor::clean_names()
+
+dem_2018 <- dem_2018 %>%
+  janitor::clean_names()
+
+dem_2022 <- dem_2022 %>%
+  janitor::clean_names()
+```
+Now to drop columns
+
+
+```{r}
+rep_2018 <- rep_2018 %>%
+  janitor::remove_empty(c("rows", "cols")) %>%
+  drop_na(candidate, state)
+
+rep_2022 <- rep_2022 %>%
+  janitor::remove_empty(c("rows", "cols")) %>%
+  drop_na(candidate, state)
+
+dem_2018 <- dem_2018 %>%
+  janitor::remove_empty(c("rows", "cols")) %>%
+  drop_na(candidate, state)
+
+dem_2022 <- dem_2022 %>%
+  janitor::remove_empty(c("rows", "cols")) %>%
+  drop_na(candidate, state)
+```
+Next check the amount of rows/columns and make sure everything looks good
+
+```{r check-clean}
+glimpse(rep_2018)
+glimpse(rep_2022)
+glimpse(dem_2018)
+glimpse(dem_2022)
+```
