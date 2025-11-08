@@ -1,19 +1,100 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r setup, include=FALSE}
+
 # Set default options
+
+
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
-# Install tidyverse if not already installed
+```{r setup, include=FALSE}
+# ---- Default options ----
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# ---- Load required libraries ----
 if (!require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
-
-# Load all required libraries
 library(tidyverse)   # includes ggplot2, dplyr, readr, tidyr, etc.
+library(janitor)
+library(ggplot2)
 
-# Confirm ggplot2 loaded
-if (!"package:ggplot2" %in% search()) {
-  library(ggplot2)
-}
+# ---- Load data cleaning code directly ----
+# (Paste your full working code from 11_DataCleaning.Rmd here)
+
+rep_2018 <- read_csv("00_rep_candidates_2018.csv")
+rep_2022 <- read_csv("00_rep_candidates_2022.csv")
+dem_2018 <- read_csv("00_dem_candidates_2018.csv")
+dem_2022 <- read_csv("00_dem_candidates_2022.csv")
+
+# Clean column names
+rep_2018 <- rep_2018 %>% clean_names()
+rep_2022 <- rep_2022 %>% clean_names()
+dem_2018 <- dem_2018 %>% clean_names()
+dem_2022 <- dem_2022 %>% clean_names()
+
+# Convert primary_percent to numeric
+rep_2018 <- rep_2018 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+rep_2022 <- rep_2022 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+dem_2018 <- dem_2018 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+dem_2022 <- dem_2022 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+# Drop empty rows/columns and missing key vars
+rep_2018 <- rep_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+rep_2022 <- rep_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+dem_2018 <- dem_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+dem_2022 <- dem_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+
+# Combine datasets
+candidates <- bind_rows(
+  dem_2018 %>% mutate(party = "Democrat", year = 2018),
+  dem_2022 %>% mutate(party = "Democrat", year = 2022),
+  rep_2018 %>% mutate(party = "Republican", year = 2018),
+  rep_2022 %>% mutate(party = "Republican", year = 2022)
+)
+
+  
+
 ```
 ---
+
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(janitor)
+
+# ---- Read CSV files ----
+rep_2018 <- read_csv("00_rep_candidates_2018.csv")
+rep_2022 <- read_csv("00_rep_candidates_2022.csv")
+dem_2018 <- read_csv("00_dem_candidates_2018.csv")
+dem_2022 <- read_csv("00_dem_candidates_2022.csv")
+
+# ---- Clean column names ----
+rep_2018 <- rep_2018 %>% clean_names()
+rep_2022 <- rep_2022 %>% clean_names()
+dem_2018 <- dem_2018 %>% clean_names()
+dem_2022 <- dem_2022 %>% clean_names()
+
+# ---- Convert primary_percent to numeric ----
+rep_2018 <- rep_2018 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+rep_2022 <- rep_2022 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+dem_2018 <- dem_2018 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+dem_2022 <- dem_2022 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+# ---- Drop empty rows/columns ----
+rep_2018 <- rep_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+rep_2022 <- rep_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+dem_2018 <- dem_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+dem_2022 <- dem_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+
+# ---- Combine datasets ----
+
+)```
 title: How Demographics and Party Dynamics Shape Primaries
 ---
 
