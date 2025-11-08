@@ -1,3 +1,18 @@
+```{r setup, include=FALSE}
+# Set default options
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Install tidyverse if not already installed
+if (!require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
+
+# Load all required libraries
+library(tidyverse)   # includes ggplot2, dplyr, readr, tidyr, etc.
+
+# Confirm ggplot2 loaded
+if (!"package:ggplot2" %in% search()) {
+  library(ggplot2)
+}
+```
 ---
 title: How Demographics and Party Dynamics Shape Primaries
 ---
@@ -6,13 +21,61 @@ Abstract:
 This project has the goal of exploring the relationship between party dynamics, candidate demographics, and the polarization of ideology in the US. Our group is going to utilize the datasets of the Democratic and Republican primary candidates from 2018/2022 election cycles in addition to congressional polarization measures to answer key questions. With the data of the preliminary results, we can see that while the two parties have definitely made progress in diversifying the candidate pools, there’s still variance in success rates grouped by gender, race, and office type – there’s also strong influence being placed by party affiliation and incumbency. It is also shown that significant drops in ideological overlap in Congress correlates with significant shifts in primary competitiveness; we will explore this further and our future analyses will utilize modeling to better quantify these relationships between demographic and primary outcomes. 
 
 # Intro:
-The purpose of this project is to examine how gender, race, and ideology correlate with political success in U.S. primary elections and how they differ amongst factors like parties. Primary elections are important to utilize when determining who should represent a certain party in the election. We will be focusing on two questions. Our first question is: “How do gender and race correlate with primary success rates, and do these patterns differ by party or office (Senate, House, Governor)?” Next, we’re going to ask: “How does the ideological overlap between Democrats and Republicans in Congress change around periods of large shifts in primary dynamics like ‘wave years’?” To answer these questions, we will utilize logistic regression, which is utilized to predict an outcome’s likelihood for events such as winning a primary. To see which traits are significant for each party’s candidates, we can compare separate models made for Republicans and Democrats. 
+The purpose of this project is to examine how gender, race, and ideology correlate with political success in U.S. primary elections and how they differ among factors like parties. Primary elections are important to utilize when determining who should represent a certain party in the election. We will be focusing on two questions. Our first question is: “How do gender and race correlate with primary success rates, and do these patterns differ by party or office (Senate, House, Governor)?” Next, we’re going to ask: “How does the ideological overlap between Democrats and Republicans in Congress change around periods of large shifts in primary dynamics like ‘wave years’?” To answer these questions, we will utilize logistic regression, which is utilized to predict an outcome’s likelihood for events such as winning a primary. To see which traits are significant for each party’s candidates, we can compare separate models made for Republicans and Democrats. 
 
 # Data:
-We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. 
+We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. We also combined the datasets into one dataframe “R.Cands” to be better. 
+
+
 
 # Visualizations: 
-TBC… 
+candidates <- read_csv("data/cleaned_candidates.csv")
+polarization <- read_csv("data/00_Political Polarization in US Congress (Assorted).csv")
+
+```{r ex1}
+# --- Load libraries ---
+library(tidyverse)
+
+# --- Read in all candidate files ---
+dem_2018 <- read_csv("dem_2018") %>%
+  mutate(party = "Democrat", year = 2018)
+
+rep_2018 <- read_csv("rep_2018") %>%
+  mutate(party = "Republican", year = 2018)
+
+dem_2022 <- read_csv("dem_2022") %>%
+  mutate(party = "Democrat", year = 2022)
+
+rep_2022 <- read_csv("rep_2022") %>%
+  mutate(party = "Republican", year = 2022)
+
+# --- Combine them into one dataset ---
+candidates <- bind_rows(dem_2018, rep_2018, dem_2022, rep_2022)
+
+# --- Optional: print summary ---
+glimpse(candidates)
+
+# --- Histogram / Bar charts: Candidates by gender and race ---
+ggplot(candidates, aes(x = gender, fill = party)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Candidates by Gender and Party",
+       x = "Gender", y = "Number of Candidates") +
+  theme_minimal()
+
+ggplot(candidates, aes(x = race, fill = party)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Candidates by Race and Party",
+       x = "Race", y = "Number of Candidates") +
+  theme_minimal()
+
+# --- Boxplot: Ideology by primary success ---
+ggplot(candidates, aes(x = factor(primary_win, labels = c("Lost", "Won")), 
+                       y = ideology_score, fill = party)) +
+  geom_boxplot() +
+  labs(title = "Ideology by Primary Outcome",
+       x = "Primary Outcome", y = "Ideology Score") +
+  theme_minimal()
+```
 
 # Analysis:
 We chose to use logistic regression to take a deeper look at how different factors can be used to predict success in a primary election. It’s especially helpful because it works with binary outcomes (win/lose) and it lets us know how much the odds of winning or losing gets affected by a particular variable. To do so, we built one model that includes all candidates:
