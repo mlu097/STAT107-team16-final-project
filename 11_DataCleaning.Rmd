@@ -1,6 +1,8 @@
 ---
 title: "an RMarkdown 11_DataCleaning.Rmd"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2025-11-07"
 ---
 
@@ -36,7 +38,7 @@ rep_2018 <- read_csv("00_rep_candidates_2018.csv")
 rep_2022 <- read_csv("00_rep_candidates_2022.csv")
 dem_2018 <- read_csv("00_dem_candidates_2018.csv")
 dem_2022 <- read_csv("00_dem_candidates_2022.csv")
-polarization <- read_csv("00_polarization_congress.csv")
+
 ```
 Next it's time to start cleaning names 
 ```{r}
@@ -51,6 +53,36 @@ dem_2018 <- dem_2018 %>%
 
 dem_2022 <- dem_2022 %>%
   janitor::clean_names()
+
+
+# --- make primary_percent columns consistent ---
+
+rep_2018 <- rep_2018 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+rep_2022 <- rep_2022 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+dem_2018 <- dem_2018 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+dem_2022 <- dem_2022 %>%
+  mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+
+
+
+
+# combine and tag each dataset with party + year
+candidates <- bind_rows(
+  rep_2018 %>% mutate(party = "Republican", year = 2018),
+  rep_2022 %>% mutate(party = "Republican", year = 2022),
+  dem_2018 %>% mutate(party = "Democrat",  year = 2018),
+  dem_2022 %>% mutate(party = "Democrat",  year = 2022)
+)
+
+# quick check
+glimpse(candidates)
+table(candidates$party)
 ```
 Now to drop columns
 
@@ -71,6 +103,36 @@ dem_2018 <- dem_2018 %>%
 dem_2022 <- dem_2022 %>%
   janitor::remove_empty(c("rows", "cols")) %>%
   drop_na(candidate, state)
+
+
+
+
+# Add year + combine all datasets
+candidates <- bind_rows(
+  dem_2018 %>% mutate(party = "Democrat", year = 2018),
+  dem_2022 %>% mutate(party = "Democrat", year = 2022),
+  rep_2018 %>% mutate(party = "Republican", year = 2018),
+  rep_2022 %>% mutate(party = "Republican", year = 2022)
+)
+
+# Compute average primary percentage by year
+avg_primary_by_year <- candidates %>%
+  group_by(year) %>%
+  summarize(
+    avg_primary = mean(primary_percent, na.rm = TRUE),
+    count = n()
+  )
+
+# Visualize the libe plot
+ggplot(avg_primary_by_year, aes(x = factor(year), y = avg_primary, group = 1)) +
+  geom_line(color = "steelblue", size = 1.2) +
+  geom_point(size = 3, color = "darkblue") +
+  labs(
+    title = "Average Primary Vote Percentage by Year",
+    x = "Election Year",
+    y = "Average Primary %"
+  ) +
+  theme_minimal()
 ```
 Next check the amount of rows/columns and make sure everything looks good
 
@@ -79,4 +141,67 @@ glimpse(rep_2018)
 glimpse(rep_2022)
 glimpse(dem_2018)
 glimpse(dem_2022)
+names(rep_2018)
 ```
+
+
+```{r}
+# --- Load libraries ---
+library(tidyverse)
+library(ggplot2)
+
+# --- Read in all candidate files ---
+
+# --- Combine them into one dataset ---
+candidates <- bind_rows(dem_2018, rep_2018, dem_2022, rep_2022)
+
+# --- Optional: print summary ---
+glimpse(candidates)
+
+
+# Example for Democrats 2022
+ggplot(dem_2022, aes(x = primary_percent)) +
+  geom_histogram(
+    bins = 30,
+    fill = "#2E86AB",
+    color = "white"
+  ) +
+  labs(
+    title = "Distribution of Primary Vote Percentages (Democrats 2022)",
+    x = "Primary Percent",
+    y = "Number of Candidates"
+  ) +
+  theme_minimal()
+
+
+```
+
+
+
+``` {r}
+
+# columns we actually need for the primary metrics
+common_vars <- c("candidate", "state", "primary_outcome", "incumbent")
+
+all_cands <- bind_rows(
+  rep_2018 %>%
+    dplyr::select(all_of(common_vars)) %>%
+    mutate(party = "Republican", year = 2018),
+
+  rep_2022 %>%
+    dplyr::select(all_of(common_vars)) %>%
+    mutate(party = "Republican", year = 2022),
+
+  dem_2018 %>%
+    dplyr::select(all_of(common_vars)) %>%
+    mutate(party = "Democrat", year = 2018),
+
+  dem_2022 %>%
+    dplyr::select(all_of(common_vars)) %>%
+    mutate(party = "Democrat", year = 2022)
+)
+
+# quick check
+dplyr::glimpse(all_cands)
+```
+
