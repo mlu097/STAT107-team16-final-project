@@ -9,7 +9,9 @@ This project has the goal of exploring the relationship between party dynamics, 
 The purpose of this project is to examine how gender, race, and ideology correlate with political success in U.S. primary elections and how they differ amongst factors like parties. Primary elections are important to utilize when determining who should represent a certain party in the election. We will be focusing on two questions. Our first question is: “How do gender and race correlate with primary success rates, and do these patterns differ by party or office (Senate, House, Governor)?” Next, we’re going to ask: “How does the ideological overlap between Democrats and Republicans in Congress change around periods of large shifts in primary dynamics like ‘wave years’?” To answer these questions, we will utilize logistic regression, which is utilized to predict an outcome’s likelihood for events such as winning a primary. To see which traits are significant for each party’s candidates, we can compare separate models made for Republicans and Democrats. 
 
 # Data:
-We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. 
+We are using five datasets: 4 of them revolve around candidate data (Democrats and Republicans) from 2018 and 2022 with information like name, race, gender, incumbency status and if they won their primary and the last dataset is on polarization which will show how much ideological overlap there is between Democrats and Republicans over time. We cleaned the data by removing empty/null columns and also changed the names of columns to string only, to make referring to them more efficient. We also combined the datasets into one dataframe “R.Cands” to be better. 
+
+
 
 # Visualizations: 
 TBC… 
