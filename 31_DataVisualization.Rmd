@@ -1,0 +1,39 @@
+---
+title: "31_DataVisualization"
+author: "Melody Lu"
+date: "2025-11-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.width = 10, fig.height = 6)
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sjPlot)
+```
+
+```{r load-packages}
+source("02_func_analysis.R")
+source("11_DataCleaning.R")
+```
+
+```{r}
+# Fit models
+formula <- as.formula(primary_win ~ party + gender + race + ideology + incumbent)
+model_all <- run_logistic_model(all_candidates, formula)
+
+# Tidy results
+tidy_results <- tidy_model_output(model_all)
+
+# Plot coefficients
+plot_model_coefficients(model_all, "Predictors of Primary Success (All Candidates)")
+
+# Compare by party
+party_results <- party_comparison_models(all_candidates, formula)
+
+# Predicted probabilities
+visualize_predicted_probabilities(model_all, "gender", all_candidates)
+
+```
