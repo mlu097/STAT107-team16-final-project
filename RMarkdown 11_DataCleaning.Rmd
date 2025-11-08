@@ -36,6 +36,7 @@ rep_2018 <- read_csv("00_rep_candidates_2018.csv")
 rep_2022 <- read_csv("00_rep_candidates_2022.csv")
 dem_2018 <- read_csv("00_dem_candidates_2018.csv")
 dem_2022 <- read_csv("00_dem_candidates_2022.csv")
+polarization <- read_csv("00_polarization_congress.csv")
 ```
 Next it's time to start cleaning names 
 ```{r}
