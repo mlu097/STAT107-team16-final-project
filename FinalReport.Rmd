@@ -1,18 +1,18 @@
 ---
 output:
-  pdf_document: default
+  pdf_document:
+    latex_engine: xelatex
   html_document: default
+
+  
 ---
 ```{r setup, include=FALSE}
 
 # Set default options
-
-
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
-```{r setup, include=FALSE}
-# ---- Default options ----
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+
 
 # ---- Load required libraries ----
 if (!require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
@@ -20,42 +20,49 @@ library(tidyverse)   # includes ggplot2, dplyr, readr, tidyr, etc.
 library(janitor)
 library(ggplot2)
 
-# ---- Load data cleaning code directly ----
-# (Paste your full working code from 11_DataCleaning.Rmd here)
+library(tidyverse)
+library(janitor)
 
+# -----------------------------
+# LOAD RAW CSV FILES
+# -----------------------------
 rep_2018 <- read_csv("00_rep_candidates_2018.csv")
 rep_2022 <- read_csv("00_rep_candidates_2022.csv")
 dem_2018 <- read_csv("00_dem_candidates_2018.csv")
 dem_2022 <- read_csv("00_dem_candidates_2022.csv")
 
-# Clean column names
+# -----------------------------
+# CLEAN COLUMN NAMES
+# -----------------------------
 rep_2018 <- rep_2018 %>% clean_names()
 rep_2022 <- rep_2022 %>% clean_names()
 dem_2018 <- dem_2018 %>% clean_names()
 dem_2022 <- dem_2022 %>% clean_names()
 
-# Convert primary_percent to numeric
-rep_2018 <- rep_2018 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
-rep_2022 <- rep_2022 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
-dem_2018 <- dem_2018 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
-dem_2022 <- dem_2022 %>% mutate(primary_percent = as.numeric(gsub("[^0-9.]", "", primary_percent)))
+# -----------------------------
+# CLEAN primary_percent FORMAT
+# -----------------------------
+clean_percent <- function(x) {
+  as.numeric(gsub("[^0-9.]", "", x))
+}
 
-# Drop empty rows/columns and missing key vars
-rep_2018 <- rep_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
-rep_2022 <- rep_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
-dem_2018 <- dem_2018 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
-dem_2022 <- dem_2022 %>% remove_empty(c("rows", "cols")) %>% drop_na(candidate, state)
+rep_2018 <- rep_2018 %>% mutate(primary_percent = clean_percent(primary_percent))
+rep_2022 <- rep_2022 %>% mutate(primary_percent = clean_percent(primary_percent))
+dem_2018 <- dem_2018 %>% mutate(primary_percent = clean_percent(primary_percent))
+dem_2022 <- dem_2022 %>% mutate(primary_percent = clean_percent(primary_percent))
 
-# Combine datasets
-candidates <- bind_rows(
-  dem_2018 %>% mutate(party = "Democrat", year = 2018),
-  dem_2022 %>% mutate(party = "Democrat", year = 2022),
-  rep_2018 %>% mutate(party = "Republican", year = 2018),
-  rep_2022 %>% mutate(party = "Republican", year = 2022)
-)
+# -----------------------------
+# ADD PARTY + YEAR VARIABLES
+# -----------------------------
+rep_2018 <- rep_2018 %>% mutate(party = "Republican", year = 2018)
+rep_2022 <- rep_2022 %>% mutate(party = "Republican", year = 2022)
+dem_2018 <- dem_2018 %>% mutate(party = "Democrat", year = 2018)
+dem_2022 <- dem_2022 %>% mutate(party = "Democrat", year = 2022)
 
-  
-
+# -----------------------------
+# COMBINE ALL DATASETS
+# -----------------------------
+candidates <- bind_rows(rep_2018, rep_2022, dem_2018, dem_2022)
 ```
 ---
 
@@ -117,21 +124,7 @@ polarization <- read_csv("data/00_Political Polarization in US Congress (Assorte
 # --- Load libraries ---
 library(tidyverse)
 
-# --- Read in all candidate files ---
-dem_2018 <- read_csv("dem_2018") %>%
-  mutate(party = "Democrat", year = 2018)
 
-rep_2018 <- read_csv("rep_2018") %>%
-  mutate(party = "Republican", year = 2018)
-
-dem_2022 <- read_csv("dem_2022") %>%
-  mutate(party = "Democrat", year = 2022)
-
-rep_2022 <- read_csv("rep_2022") %>%
-  mutate(party = "Republican", year = 2022)
-
-# --- Combine them into one dataset ---
-candidates <- bind_rows(dem_2018, rep_2018, dem_2022, rep_2022)
 
 # --- Optional: print summary ---
 glimpse(candidates)
@@ -150,12 +143,12 @@ ggplot(candidates, aes(x = race, fill = party)) +
   theme_minimal()
 
 # --- Boxplot: Ideology by primary success ---
-ggplot(candidates, aes(x = factor(primary_win, labels = c("Lost", "Won")), 
-                       y = ideology_score, fill = party)) +
-  geom_boxplot() +
-  labs(title = "Ideology by Primary Outcome",
-       x = "Primary Outcome", y = "Ideology Score") +
-  theme_minimal()
+##ggplot(candidates, aes(x = factor(won_primary, labels = c("Lost", "Won")), 
+   ##                    y = ideology_score, fill = party)) +
+ ## geom_boxplot() +
+  ##labs(title = "Ideology by Primary Outcome",
+  ##     x = "Primary Outcome", y = "Ideology Score") +
+ ## theme_minimal()
 ```
 The histograms relate to primary dynamics, which is how competitive and dynamic the primaries are. The histograms tell us that the primaries were actyally not as competitive, as there's typically one strong, unchallenged candidate. The wave elections would show a lot more spread in the middle range -- this is the candidates splitting the votes and it seems very spread out. The difference between the 2018 and 2022 primaries show us how polarized they were individually. 
 The x-axis represents the candidate's share of votes in their primary ranged from0 to 100% and the y-axis represents how many candidates got that share. There are visibly two spikes -- one spike is near 0% which means many Democrats got extremely low support and lost badly and another spike is near 100%, which means there were candidates who were strong and won overwhelmingly. So, we can conclude that most democratic primaries had either very strong, practically unopposed candidates or hopeless ones with small to no votes. Very few of the races were neck and neck. 
