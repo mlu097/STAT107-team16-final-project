@@ -17,6 +17,7 @@ library(sjPlot)
 ```{r load-packages}
 source("02_func_analysis.R")
 source("11_DataCleaning.R")
+source("test_clean.R")
 ```
 
 ```{r}
@@ -36,4 +37,70 @@ party_results <- party_comparison_models(all_candidates, formula)
 # Predicted probabilities
 visualize_predicted_probabilities(model_all, "gender", all_candidates)
 
+##
+##Q1 VISUALISATIONS
+##
+
+#  win rate by gender
+ggplot(candidates_q1, aes(gender, primary_outcome)) +
+  stat_summary(fun = mean, geom = "bar", fill = "grey") +
+  labs(title = "Primary Win Rate by Gender",
+       y = "Win Rate", x = "Gender") +
+  theme_minimal()
+
+#win rate by gender seperated into parties
+ggplot(candidates_q1, aes(gender, primary_outcome, fill = party)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  labs(title = "Win Rate by Gender and Party",
+       y = "Win Rate", x = "Gender") +
+  theme_minimal()
+
+# histogram of vote % by gender
+ggplot(candidates_q1, aes(primary_percent, fill = gender)) +
+  geom_histogram(bins = 20, alpha = 0.6, position = "identity") +
+  labs(title="Distribution of Primary Vote % by Gender",
+       x="Primary Vote %", y="Count") +
+  theme_minimal()
+
+# win rate by race
+ggplot(candidates_q1, aes(race, primary_outcome)) +
+  stat_summary(fun = mean, geom = "bar", fill="orange") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title="Primary Win Rate by Race", y="Win Rate", x="Race") +
+  theme_minimal()
+
+# win rate by gender × race
+ggplot(candidates_q1, aes(x = gender, y = primary_outcome, fill = race)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Primary Win Rate by Gender and Race",
+       x = "Gender", y = "Win Rate", fill = "Race") +
+  theme_minimal()
+
+# win rate by gender × race seperated by party
+ggplot(candidates_q1, aes(x = gender, y = primary_outcome, fill = race)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  facet_wrap(~ party) +
+  labs(title = "Win Rate by Gender and Race, Separated by Party",
+       x = "Gender", y = "Win Rate", fill = "Race") +
+  theme_minimal()
+
+# win rate by office
+ggplot(candidates_q1, aes(office, primary_outcome)) +
+  stat_summary(fun = mean, geom = "bar", fill = "steelblue") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Win Rate by Office", y = "Win Rate", x = "Office") +
+  theme_minimal()
+
+# logistic regression fit
+model <- glm(primary_outcome ~ primary_percent, data=candidates_q1, family="binomial")
+
+# scatter + logistic curve
+ggplot(candidates_q1, aes(primary_percent, primary_outcome)) +
+  geom_jitter(height=0.05, alpha=0.5) +
+  stat_smooth(method="glm", method.args=list(family="binomial"), se=TRUE, color="red") +
+  labs(title="Logistic Regression of Win Probability vs Primary %", 
+       x="Primary Vote %", y="Win Probability") +
+  theme_minimal()
 ```
