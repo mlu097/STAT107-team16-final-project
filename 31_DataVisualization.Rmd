@@ -157,7 +157,7 @@ Ok now that we have created visualizations for question number 1, we will follow
 
 ```{r np}
 ## Q2 VISUALIZATIONS
-#congressinal overlap over time
+#congressional overlap over time
 ggplot(pol, aes(year, overlap, color = chamber)) +
   geom_line(size = 1.2) +
   labs(title = "Ideological Overlap in Congress Over Time",
