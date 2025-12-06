@@ -43,7 +43,7 @@ For the second dataset,
 
 VISUALIZATION 1: Win Rate by Gender and Party
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/winrate_gender_rate_party.jpg")
+knitr::include_graphics("winrate_gender_rate_party.jpg")
 ```
 
 
@@ -55,7 +55,7 @@ In Republican primaries, the trend is the opposite. Men win far more often than 
 
 Visualization 2: Distribution of Primary Vote Percentage by Gender
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/distribution_primaryvote_gender.jpg")
+knitr::include_graphics("distribution_primaryvote_gender.jpg")
 ```
 
 Looking at how primary vote percentages are distributed across genders helps us understand not just who wins but how candidates perform overall. The histogram shows that female candidates tend to cluster more in the mid-to-high range of vote percentages, meaning that even when women don’t win, they tend to remain competitive throughout the race. 
@@ -66,7 +66,7 @@ Nonbinary candidates appear too infrequently for meaningful comparison, but thei
 
 Visualization 3: Primary Win Rate by Race X Gender X Party
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/pwr_gender_race_party.jpg")
+knitr::include_graphics("pwr_gender_race_party.jpg")
 ```
 
 Race adds another important layer to understanding primary outcomes. 
@@ -82,7 +82,7 @@ In Republican primaries, the gaps widen significantly, with White men dominating
 
 Visualization 4: Win Rates by Office Type: Senate vs Governor
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/winrate_office.jpg")
+knitr::include_graphics("winrate_office.jpg")
 ```
 
 Office type also plays a major role in shaping primary outcomes. Senate races tend to be more competitive because they attract larger pools of candidates, have much higher stakes, and typically involve fewer seats. As a result, the overall win rates in Senate races are lower, simply because candidates face more competition. 
@@ -94,7 +94,7 @@ If women are more likely to run for Senate seats, where success rates are natura
 
 Visualization 5: Heatmap: Gender × Office × Party
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/pwr_gender_race_party.jpg")
+knitr::include_graphics("pwr_gender_race_party.jpg")
 ```
 
 The heatmap brings together gender, office type, and party into a single visualization, and it is one of the most interesting figures in the analysis. 
@@ -106,8 +106,8 @@ What makes the heatmap so strong is that it shows how gender differences are not
 
 Visualization: Logistic Regression: Main Predictors of Winning
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/logistic_regression_win.jpg")
-knitr::include_graphics("/Users/ananyapandit/Downloads/STAT107-team16-final-project-main/logistic_reg.jpg")
+knitr::include_graphics("logistic_regression_win.jpg")
+knitr::include_graphics("logistic_reg.jpg")
 ```
 
 The logistic regression model tests whether gender still matters after controlling for other important predictors such as party, race, office type, and primary vote percentage. The results show that primary vote percentage is by far the strongest predictor of winning, which makes more logical sense because candidates who receive more votes are overwhelmingly the ones who win. In fact, each additional percentage point of vote share significantly increases a candidate’s odds of victory. 
