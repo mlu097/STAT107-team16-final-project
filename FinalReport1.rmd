@@ -10,13 +10,15 @@ output:
 
 source("1_datacleaning.R")
 ```
-TITLE: 
+TITLE: How Demographics and Party Dynamics Shape Primaries 
 
 ABSTRACT:
   
 This project explores how party dynamics and candidate demographics relate to primary election success in the United States. Using statewide Democratic and Republican primary candidate data from the 2022 election cycle, we examine the relationships between gender, race, party, and office type in shaping who wins and who loses. Our visualizations show that gender on its own is not a strong or consistent predictor of success, but once the data is separated by party and office type, clear differences begin to emerge.
 
-Women tend to perform better than men in Democratic primaries, while men continue to dominate Republican primaries, especially in more competitive Senate contests. Race also interacts with these patterns, and some gender–race combinations experience stronger or weaker outcomes depending on the political environment. Our logistic regression results confirm that primary vote percentage is the single strongest factor in determining who wins a primary, but even after controlling for vote share, party and race still show meaningful associations with outcomes. A secondary question on ideology will be explored later to understand how differences in ideological positioning relate to these structural patterns.
+Women tend to perform better than men in Democratic primaries, while men continue to dominate Republican primaries, especially in more competitive Senate contests. Race also interacts with these patterns, and some gender–race combinations experience stronger or weaker outcomes depending on the political environment. Our logistic regression results confirm that primary vote percentage is the single strongest factor in determining who wins a primary, but even after controlling for vote share, party and race still show meaningful associations with outcomes. 
+
+A secondary question on ideology changes will be further explored to understand how differences in ideological positioning relate to these structural patterns. We also look at ideology to see whether being more moderate or more extreme affects a candidate’s chances of winning. Early patterns show that ideology might matter differently for different groups. For example, some gender–race combinations seem to do better when they are closer to the party’s mainstream, while others face more challenges when they take more ideological positions.
 
 INTRO:
   
@@ -24,13 +26,19 @@ The purpose of this study is to understand how gender, race, and ideological pla
 
 The first research question we explore asks how gender correlates with primary win rates and whether this relationship is different across parties or office types such as Governor and Senate. Past research suggests that gender and race can influence electoral outcomes, but these effects often depend heavily on the political context, making it important to examine Democrats and Republicans separately. The second research question, which will be addressed later, will focus on ideology by looking at how ideological differences between parties relate to broader dynamics in primary competitiveness. Throughout the report, we use a mix of visualizations and logistic regression models to identify where demographic traits matter most and where larger structural patterns shape election outcomes.
 
+The second research question we explore looks at ideology and how the ideological positions of the two major parties have changed over time. To examine this, we use two visualizations: one that shows how much the ideological distributions of Democrats and Republicans overlap from year to year, and another that tracks the growing ideological distance between the parties. These graphs help us see whether increasing polarization shapes primary competitiveness and whether candidates are rewarded for aligning more closely with their party’s ideological center or its extremes.
+
 DATA:
   
 The dataset consists of all Democratic and Republican statewide primary candidates from the 2022 election cycle. Each row represents a candidate and includes information about the candidate’s gender, race, party affiliation, office sought (Senate or Governor), primary vote percentage, and primary outcome. The dataset also includes ideological scores that will be used later in the second part of the project. The 2022 cycle offers a large and balanced sample across both parties, making it a strong foundation for exploring demographic differences in performance and success.
 
+This dataset
+
 DATA CLEANING:
 
 To prepare the dataset for analysis, we followed a strong cleaning process. Missing or inconsistent demographic information was removed to ensure fair comparisons. Gender labels were standardized into “Female,” “Male,” and “Nonbinary,” and primary election outcomes were standardized into a binary format showing if the candidate won (1) or lost (0). Because this project focuses specifically on the two major political parties, we filtered out minor-party candidates. Primary vote percentages, which appear in different formats in the raw data, were converted into numeric values so they could be used directly in the regression model. We also created grouped data structures that combine race, gender, party, and office type, which allowed us to build heatmaps and intersectional analyses later in the report. These steps ensured that the dataset was clean, consistent, and ready for both visual and statistical modeling.
+
+For the second dataset, 
 
 VISUALIZATION 1: Win Rate by Gender and Party
 ```{r, echo=FALSE, out.width="70%"}
