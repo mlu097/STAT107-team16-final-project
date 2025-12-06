@@ -16,7 +16,7 @@ library(sjPlot)
 
 ```{r lp}
 
-source("1_datacleaning.R")
+source("01_datacleaning.R")
 ```
 Below is some code for visualizations that contextualize question 1: How does gender or race correlate with primary success rates (winning primaries), and do those correlations differ by party or by office (Senate, House, Governor)?
 ```{r}

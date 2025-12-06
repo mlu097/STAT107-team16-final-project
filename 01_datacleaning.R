@@ -99,7 +99,7 @@ dem_22_q1 <- dem_22 %>% select(any_of(q1_keep))
 # combine for Q1 dataset
 candidates_q1 <- bind_rows(rep_22_q1, dem_22_q1)
 
-# drop sparse columns
+# drop empty columns
 drop_sparse <- function(df, threshold = 0.95){
   df[, colMeans(is.na(df)) < threshold]
 }
