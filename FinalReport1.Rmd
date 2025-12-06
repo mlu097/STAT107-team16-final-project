@@ -137,3 +137,7 @@ Women tend to perform better in Democratic primaries, while men perform better i
 Race introduces additional layers, as certain gender–race combinations show stronger or weaker outcomes depending on party context. Our logistic regression confirms that vote share is the dominant predictor of winning, and once we account for vote share and party, gender itself no longer predicts outcomes by itself. 
 
 This means that most gender differences come from structural factors: who runs, which offices they run for, and the dynamics of each party, rather than gender acting as a direct barrier or advantage. These findings highlight the importance of studying election outcomes in context rather than in isolation. 
+
+The ideology results support this argument by showing how the broader political environment has changed over time. The ideological distance between Democrats and Republicans has grown dramatically since the 1970s, while ideological overlap has nearly disappeared. This long-term polarization helps explain why party differences in primary outcomes are so strong today: candidates operate in a system where the parties are farther apart than ever, leaving little shared ideological space. As polarization increases, party context becomes even more influential in shaping which types of candidates succeed.
+
+
