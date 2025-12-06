@@ -16,7 +16,7 @@ library(sjPlot)
 
 ```{r load-packages}
 source("02_func_analysis.R")
-source("11_DataCleaning.R")
+# source("11_DataCleaning.R")
 source("test_clean.R")
 ```
 
