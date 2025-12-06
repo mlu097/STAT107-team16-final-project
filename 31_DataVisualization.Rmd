@@ -25,7 +25,8 @@ source("1_datacleaning.R")
 ##model_all <- run_logistic_model(all_candidates, formula)
 
 ##Q1 VISUALISATIONS
-##
+
+
 #  win rate by gender
 ggplot(candidates_q1, aes(gender, primary_outcome)) +
   stat_summary(fun = mean, geom = "bar", fill = "grey") +
@@ -33,18 +34,34 @@ ggplot(candidates_q1, aes(gender, primary_outcome)) +
        y = "Win Rate", x = "Gender") +
   theme_minimal()
 
-#win rate by gender seperated into parties
+# win rate by gender separated into parties
 ggplot(candidates_q1, aes(gender, primary_outcome, fill = party)) +
   stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  scale_fill_manual(values = c("Democrat" = "blue", "Republican" = "red")) +
   labs(title = "Win Rate by Gender and Party",
-       y = "Win Rate", x = "Gender") +
+       y = "Win Rate", x = "Gender",
+       fill = "Party") +
   theme_minimal()
 
 # histogram of vote % by gender
 ggplot(candidates_q1, aes(primary_percent, fill = gender)) +
-  geom_histogram(bins = 20, alpha = 0.6, position = "identity") +
-  labs(title="Distribution of Primary Vote % by Gender",
-       x="Primary Vote %", y="Count") +
+  geom_histogram(
+    bins = 20,
+    alpha = 0.6,
+    position = "identity",
+    color = "black"      # outline so white doesn't disappear
+  ) +
+  scale_fill_manual(values = c(
+    "Female" = "black",
+    "Male" = "white",
+    "Nonbinary" = "red"
+  )) +
+  labs(
+    title = "Distribution of Primary Vote % by Gender",
+    x = "Primary Vote %",
+    y = "Count",
+    fill = "Gender"
+  ) +
   theme_minimal()
 
 # win rate by race
