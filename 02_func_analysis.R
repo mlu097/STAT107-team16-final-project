@@ -70,7 +70,7 @@ party_comparison_models <- function(data, formula) {
   return(results)
 }
 
-# visualize_predicted_probabilities
+# visualize predicted probabilities
 
 visualize_predicted_probabilities <- function(model, variable, data) {
   new_data <- data %>%
@@ -88,3 +88,6 @@ visualize_predicted_probabilities <- function(model, variable, data) {
     ) +
     theme_minimal(base_size = 13)
 }
+
+cat("Analysis functions loaded successfully\n")
+
