@@ -15,7 +15,7 @@ Authors: Ananya Pandit(@ananyappandit), Melody Lu(@mlu097), Chiko Orji(@mrchiko3
 | Files | Description |
 | --- | --- |
 | `00_requirements.R` | R script file that includes necessary libraries |
-| `01_datacleaning.R` | R script file that contains cleaned data |
+| `1_datacleaning.R` | R script file that contains cleaned data |
 | `02_func_analysis.R` | R script file that includes desired functions |
 | `11_DataCleaning.Rmd` | R markdown file that display the cleaned data |
 | `31_Data Visualization.Rmd` | R markdown file that displays visualization of our data |
