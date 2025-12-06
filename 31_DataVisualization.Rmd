@@ -95,8 +95,6 @@ ggplot(candidates_q1, aes(office, primary_outcome)) +
   labs(title = "Win Rate by Office", y = "Win Rate", x = "Office") +
   theme_minimal()
 
-# logistic regression fit
-model <- glm(primary_outcome ~ primary_percent, data=candidates_q1, family="binomial")
 
 # scatter + logistic curve
 ggplot(candidates_q1, aes(primary_percent, primary_outcome)) +
@@ -142,5 +140,18 @@ ggplot(heatmap_q1, aes(x = office, y = gender, fill = success_rate)) +
     strip.text = element_text(face = "bold", size = 12),
     plot.title = element_text(face = "bold", size = 14)
   )
+
+# logistic regression: main effects
+model_q1 <- glm(
+  primary_outcome ~ gender + race + party + office + primary_percent,
+  data = candidates_q1,
+  family = "binomial"
+)
+
+# odds ratios main model
+or_main <- exp(cbind(OR = coef(model_q1),
+                     confint(model_q1)))
+or_main
+
 
 ```
