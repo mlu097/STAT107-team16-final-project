@@ -18,13 +18,13 @@ library(sjPlot)
 
 source("1_datacleaning.R")
 ```
-
+Below is some code for visualizations that contextualize question 1: How does gender or race correlate with primary success rates (winning primaries), and do those correlations differ by party or by office (Senate, House, Governor)?
 ```{r}
 # Fit models
 ##formula <- as.formula(primary_win ~ party + gender + race + ideology + incumbent)
 ##model_all <- run_logistic_model(all_candidates, formula)
 
-##Q1 VISUALISATIONS
+##Q1 VISUALIZATION
 
 
 #  win rate by gender
@@ -152,6 +152,27 @@ model_q1 <- glm(
 or_main <- exp(cbind(OR = coef(model_q1),
                      confint(model_q1)))
 or_main
+```
+Ok now that we have created visualizations for question number 1, we will follow suite with question number 2: How does the proportion of overlap (ideological overlap between parties) in Congress change around periods of large shifts in primary dynamics (e.g. big wave years)?
 
+```{r np}
+## Q2 VISUALIZATIONS
+#congressinal overlap over time
+ggplot(pol, aes(year, overlap, color = chamber)) +
+  geom_line(size = 1.2) +
+  labs(title = "Ideological Overlap in Congress Over Time",
+       x = "Year", y = "Overlap",
+       color = "Chamber") +
+  theme_minimal()
 
+# ideological distance over time
+ggplot(pol, aes(x = year, y = party_mean_diff_d1, color = chamber)) +
+  geom_line(size = 1.2) +
+  labs(
+    title = "Party Ideological Distance Over Time",
+    x = "Year",
+    y = "Ideological Distance",
+    color = "Chamber"
+  ) +
+  theme_minimal()
 ```
