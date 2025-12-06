@@ -39,12 +39,15 @@ rep_22$primary_percent <- clean_percent(rep_22$primary_percent)
 dem_18$primary_percent <- clean_percent(dem_18$primary_percent)
 dem_22$primary_percent <- clean_percent(dem_22$primary_percent)
 
+
 # standardize office labels
 clean_office <- function(x){
+  x <- tolower(x)
+  
   case_when(
-    str_detect(tolower(x), "house") ~ "House",
-    str_detect(tolower(x), "sen") ~ "Senate",
-    str_detect(tolower(x), "gov") ~ "Governor",
+    str_detect(x, "rep") | str_detect(x, "representative") ~ "House",
+    str_detect(x, "sen") | str_detect(x, "senator") ~ "Senate",
+    str_detect(x, "gov") | str_detect(x, "governor") ~ "Governor",
     TRUE ~ NA_character_
   )
 }

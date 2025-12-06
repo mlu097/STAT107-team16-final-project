@@ -88,4 +88,42 @@ ggplot(candidates_q1, aes(primary_percent, primary_outcome)) +
   labs(title="Logistic Regression of Win Probability vs Primary %", 
        x="Primary Vote %", y="Win Probability") +
   theme_minimal()
+
+# heatmap data
+heatmap_q1 <- candidates_q1 %>%
+  group_by(party, office, gender) %>%
+  summarise(
+    n_total = n(),
+    success_rate = mean(primary_outcome, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  filter(n_total >= 5)  
+
+# plot heatmap
+ggplot(heatmap_q1, aes(x = office, y = gender, fill = success_rate)) +
+  geom_tile(color = "white", size = 1.2) +
+  geom_text(
+    aes(label = sprintf("%.0f%%\n(n=%d)", success_rate * 100, n_total)),
+    color = "white", fontface = "bold", size = 3.5
+  ) +
+  facet_wrap(~ party) +
+  scale_fill_gradient2(
+    low = "#d73027",      # low = red
+    mid = "#fee08b",      # mid = yellow
+    high = "#1a9850",     # high = green
+    midpoint = 0.35,
+    name = "Win Rate"
+  ) +
+  labs(
+    title = "Primary Win Rates by Gender × Office × Party",
+    x = "Office",
+    y = "Gender"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    strip.text = element_text(face = "bold", size = 12),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+
 ```
