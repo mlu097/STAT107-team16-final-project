@@ -10,6 +10,7 @@ Authors: Ananya Pandit(@ananyappandit), Melody Lu(@mlu097), Chiko Orji(@mrchiko3
 | `00_dem_candidates_2022.csv` | 2022 primary election democratic candidates data |
 | `00_rep_candidates_2018.csv` | 2018 primary election republican candidates data |
 | `00_rep_candidates_2022.csv` | 2022 primary election republican candidates data |
+|'00_Political Polarization in US Congress (Assorted).csv' | Congress-level idealogy and polarization metric|
 
 ### Data Process
 | Files | Description |
