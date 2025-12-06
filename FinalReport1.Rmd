@@ -118,7 +118,7 @@ Race shows some associations with win probability, but the estimates come with u
 The regression results confirm that the raw gender gaps seen in the visualizations arise mostly from contextual differences such as party environments, competitiveness, and candidate pool composition rather than gender acting as a direct causal factor.
 
 
-VISUALIZATION:
+VISUALIZATION: IDEOLOGICAL OVERLAP IN CONGRESS
 *insert visualization*
 
 The first plot shows how far apart Democrats and Republicans are ideologically in the House and Senate from the late 1800s to today. Higher values mean the parties are more polarized — their average ideological positions are farther apart. The patterns show that polarization dropped sharply around the mid-20th century, reaching its lowest point between the 1940s and 1950s, when the parties were the most ideologically similar. After roughly 1970, the distance between the parties begins rising steadily in both chambers, with the modern era showing the highest levels of polarization on record. The House consistently polarizes earlier and more sharply than the Senate. Overall, this visualization makes it clear that Congress has become dramatically more polarized over time, especially since the 1980s.
