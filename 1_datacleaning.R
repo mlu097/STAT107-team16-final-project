@@ -107,3 +107,4 @@ candidates_q1 <- drop_sparse(candidates_q1)
 
 # clean ideology dataset for Q2
 pol_q2 <- pol %>% select(year, chamber, overlap) %>% filter(!is.na(overlap))
+

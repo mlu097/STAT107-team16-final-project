@@ -14,33 +14,18 @@ library(scales)
 library(sjPlot)
 ```
 
-```{r load-packages}
-source("02_func_analysis.R")
-source("11_DataCleaning.R")
-source("test_clean.R")
+```{r lp}
+
+source("1_datacleaning.R")
 ```
 
 ```{r}
 # Fit models
-formula <- as.formula(primary_win ~ party + gender + race + ideology + incumbent)
-model_all <- run_logistic_model(all_candidates, formula)
+##formula <- as.formula(primary_win ~ party + gender + race + ideology + incumbent)
+##model_all <- run_logistic_model(all_candidates, formula)
 
-# Tidy results
-tidy_results <- tidy_model_output(model_all)
-
-# Plot coefficients
-plot_model_coefficients(model_all, "Predictors of Primary Success (All Candidates)")
-
-# Compare by party
-party_results <- party_comparison_models(all_candidates, formula)
-
-# Predicted probabilities
-visualize_predicted_probabilities(model_all, "gender", all_candidates)
-
-##
 ##Q1 VISUALISATIONS
 ##
-
 #  win rate by gender
 ggplot(candidates_q1, aes(gender, primary_outcome)) +
   stat_summary(fun = mean, geom = "bar", fill = "grey") +
