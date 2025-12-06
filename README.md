@@ -10,7 +10,7 @@ Authors: Ananya Pandit(@ananyappandit), Melody Lu(@mlu097), Chiko Orji(@mrchiko3
 | `00_dem_candidates_2022.csv` | 2022 primary election democratic candidates data |
 | `00_rep_candidates_2018.csv` | 2018 primary election republican candidates data |
 | `00_rep_candidates_2022.csv` | 2022 primary election republican candidates data |
-| `00_Political Polarization in US Congress (Assorted).csv` | Congress-level idealogy and polarization metric|
+| `00_Political Polarization in US Congress (Assorted).csv` | Congress-level idealogy and polarization metric |
 
 ### Data Process
 | Files | Description |
@@ -25,6 +25,7 @@ Authors: Ananya Pandit(@ananyappandit), Melody Lu(@mlu097), Chiko Orji(@mrchiko3
 We are aiming to answer these following questions for now:
 
 1. How does gender or race correlate with primary success rates (winning primaries), and do those correlations differ by party or by office (Senate, House, Governor)?
-2. How does the proportion of overlap (ideological overlap between parties) in Congress change around periods of large shifts in primary dynamics (e.g. big wave years)?
+2. How does ideological overlap between Democrats and Republicans in Congress change over time?
+
 
 
