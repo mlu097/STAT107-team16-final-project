@@ -8,7 +8,6 @@ output:
 ---
 
 ```{r lp}
-file.info("01vis_q2")
 source("01_datacleaning.R")
 ```
 TITLE: How Demographics and Party Dynamics Shape Primaries 
@@ -120,7 +119,7 @@ The regression results confirm that the raw gender gaps seen in the visualizatio
 
 VISUALIZATION: IDEOLOGICAL OVERLAP IN CONGRESS
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("01vis_q2")
+knitr::include_graphics("01vis_q2.jpg")
 ```
 
 The first plot shows how far apart Democrats and Republicans are ideologically in the House and Senate from the late 1800s to today. Higher values mean the parties are more polarized — their average ideological positions are farther apart. The patterns show that polarization dropped sharply around the mid-20th century, reaching its lowest point between the 1940s and 1950s, when the parties were the most ideologically similar. After roughly 1970, the distance between the parties begins rising steadily in both chambers, with the modern era showing the highest levels of polarization on record. The House consistently polarizes earlier and more sharply than the Senate. Overall, this visualization makes it clear that Congress has become dramatically more polarized over time, especially since the 1980s.
@@ -128,7 +127,7 @@ The first plot shows how far apart Democrats and Republicans are ideologically i
 
 VISUALIZATION:
 ```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("02_visq2")
+knitr::include_graphics("02_visq2.jpg")
 ```
 
 The second plot flips the perspective by showing overlap—the amount of shared ideological space between Democrats and Republicans. Higher values mean the parties have members who vote similarly; lower values mean there is almost no ideological mixing. Early in U.S. history, overlap was relatively high, especially in moments where conservative Democrats and liberal Republicans existed. Overlap peaked around the 1920s–1940s, but then fell sharply beginning in the 1970s. Today, overlap is essentially zero, meaning the parties no longer share any meaningful ideological common ground. The House loses its overlap slightly faster than the Senate, but both chambers ultimately converge to the same place: near-total separation. This visualization reinforces the story from the first plot — modern Congress is defined by extreme partisan separation, with almost no ideological crossover remaining.
